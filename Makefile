@@ -9,15 +9,15 @@ MAKEFLAGS += -L
 
 
 ##  This rule builds the treeTraversal executable
-traverse: FSTreeTraversal.o main.o
-	$(CXX) $(CXXFLAGS) -o treeTraversal main.o FSTreeTraversal.o
+traverse: FSTreeTraversal.o main.o DirNode.o FSTree.o
+	$(CXX) $(CXXFLAGS) -o treeTraversal main.o FSTreeTraversal.o DirNode.o FSTree.o
 	
 ##	This rule builds FSTreeTraversal.o
-FSTreeTraversal.o: FSTree.h FSTreeTraversal.cpp DirNode.h
-	$(CXX) $(CXXFLAGS) -c FSTreeTraversal.cpp
+FSTreeTraversal.o: FSTree.h FSTreeTraversal.cpp DirNode.h DirNode.o FSTree.o
+	$(CXX) $(CXXFLAGS) -c FSTreeTraversal.cpp DirNode.o FSTree.o
 
 ##	This rule builds main.o
-main.o: main.cpp FSTree.h DirNode.h
+main.o: main.cpp FSTree.h DirNode.h DirNode.o FSTree.o
 	$(CXX) $(CXXFLAGS) -c main.cpp
 
 provide:
