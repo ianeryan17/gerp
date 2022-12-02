@@ -8,6 +8,9 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
+
 string stripNonAlphaNum(string input);
 bool isAlphaChar(char c);
 
