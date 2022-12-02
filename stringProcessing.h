@@ -9,5 +9,6 @@
 #include <string>
 
 string stripNonAlphaNum(string input);
+bool isAlphaChar(char c);
 
 #endif 
