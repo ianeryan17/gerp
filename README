@@ -10,5 +10,5 @@ FSTreeTraversal is the implementation for FSTree.h and includes the printAll() f
 main.cpp acts as the main for FSTreeTraversal.cpp.
 
 Summary:
-To run FSTreeTraversal.cpp, use the command "make traversal" followed by "./treeTraversal DIRECTORY".
+To run FSTreeTraversal.cpp, use the command "make traverse" followed by "./treeTraversal DIRECTORY".
 To run stringProcessing.cpp, use the command "make stringMan", followed by "./stringMan".
