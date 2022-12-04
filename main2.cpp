@@ -13,13 +13,17 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
+#include <cassert>
 #include <iomanip>
 
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-    cout << stripNonAlphaNum("comp$15$69###") << endl;
+    assert(stripNonAlphaNum("comp$15$63892###") == "comp$15$63892");
+    assert(stripNonAlphaNum("c###c") == "c###c");
+    assert(stripNonAlphaNum("comp") == "comp");
+    assert(stripNonAlphaNum("c###") == "c");
 
     return 0;
 }

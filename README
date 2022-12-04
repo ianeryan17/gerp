@@ -1,0 +1,14 @@
+Authors:
+Ryo Shimada and Ian Ryan
+
+Files:
+stringProcessing.h is the linker file for stringProcessing.cpp.
+main2.cpp acts as the main for stringProcessing.cpp.
+stringProcessing.cpp acts as the implementation of stringProcessing.h and includes the stripNonAlphaNum() function.
+
+FSTreeTraversal is the implementation for FSTree.h and includes the printAll() function.
+main.cpp acts as the main for FSTreeTraversal.cpp.
+
+Summary:
+To run FSTreeTraversal.cpp, use the command "make traversal" followed by "./treeTraversal DIRECTORY".
+To run stringProcessing.cpp, use the command "make stringMan", followed by "./stringMan".

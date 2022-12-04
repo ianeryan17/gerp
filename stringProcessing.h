@@ -1,6 +1,10 @@
-//
-// Created by Vivek on 10/30/16.
-//
+/*
+ * Ryo Shimada and Ian Ryan
+ * 12/2/22
+ * 
+ * This is the linker file for stringProcessing.cpp.
+ */
+
 
 #ifndef _STRINGPROCESSING_H
 #define _STRINGPROCESSING_H

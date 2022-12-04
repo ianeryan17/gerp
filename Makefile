@@ -33,6 +33,9 @@ main2.o: main2.cpp stringProcessing.h
 	$(CXX) $(CXXFLAGS) -c main2.cpp
 
 provide:
+	comp15 proj4_gerp_phase1 FSTreeTraversal.cpp \
+	stringProcessing.h stringProcessing.cpp \
+	README
 
 ##
 ## Here is a rule for compiling .cyl files for use in your testing

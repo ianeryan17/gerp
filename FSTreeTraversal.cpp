@@ -3,7 +3,7 @@
  *
  * 11/30/22
  * 
- * This file acts as the implementation for FSTree.h. This is the one I'm working on.
+ * This file acts as the implementation for FSTree.h.
  */
 
 #include "FSTree.h"
@@ -20,7 +20,10 @@
 using namespace std;
 
 
-//While loop to find and print each path ADD BETTER DOCUMENTATION
+// Input: DirNode* rootNode and string dirName
+// Output: nothing
+// Purpose: this function recursively tranverses the FSTree of DirNodes
+// and prints out each of the possible file paths under the given dirName.
 void printAll(DirNode* rootNode, string dirName){
     DirNode *currNode = new DirNode();
     DirNode *tempNode = new DirNode();
@@ -46,4 +49,3 @@ void printAll(DirNode* rootNode, string dirName){
         }
     }
 }
-
