@@ -9,7 +9,10 @@ MAKEFLAGS += -L
 
 
 ##  This rule builds the treeTraversal executable
-traverse: FSTreeTraversal.o main.o DirNode.o FSTree.o
+traverse: FSTreeTraversal.o DirNode.o FSTree.o
+	$(CXX) $(CXXFLAGS) -o treeTraversal FSTreeTraversal.o DirNode.o FSTree.o
+
+test_traverse: FSTreeTraversal.o main.o DirNode.o FSTree.o
 	$(CXX) $(CXXFLAGS) -o treeTraversal main.o FSTreeTraversal.o DirNode.o FSTree.o
 
 ##  This rule builds the stringMan executable

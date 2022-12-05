@@ -19,6 +19,17 @@
 
 using namespace std;
 
+void printAll(DirNode* rootNode, string dirName);
+
+int main(int argc, char *argv[]){
+    if (argc >= 2 or argc < 1){
+        return 1;
+    }
+    string dir = argv[1];
+    printAll(&dir, dir);
+
+    return 0;
+}
 
 // Input: DirNode* rootNode and string dirName
 // Output: nothing
