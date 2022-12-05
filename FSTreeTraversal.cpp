@@ -22,11 +22,10 @@ using namespace std;
 void printAll(DirNode* rootNode, string dirName);
 
 int main(int argc, char *argv[]){
-    if (argc >= 2 or argc < 1){
-        return 1;
-    }
     string dir = argv[1];
-    printAll(&dir, dir);
+    FSTree tree(dir);
+    DirNode* root = tree.getRoot();
+    printAll(root, dir);
 
     return 0;
 }
