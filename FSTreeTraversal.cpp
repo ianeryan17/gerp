@@ -22,6 +22,9 @@ using namespace std;
 void printAll(DirNode* rootNode, string dirName);
 
 int main(int argc, char *argv[]){
+    if (argc != 2){
+        return 1;
+    }
     string dir = argv[1];
     FSTree tree(dir);
     DirNode* root = tree.getRoot();
@@ -35,8 +38,8 @@ int main(int argc, char *argv[]){
 // Purpose: this function recursively tranverses the FSTree of DirNodes
 // and prints out each of the possible file paths under the given dirName.
 void printAll(DirNode* rootNode, string dirName){
-    DirNode *currNode = new DirNode();
-    DirNode *tempNode = new DirNode();
+    DirNode *currNode;
+    DirNode *tempNode;
     string tempName;
     currNode = rootNode;
     if (currNode->isEmpty()){
