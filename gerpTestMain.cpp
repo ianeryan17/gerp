@@ -12,11 +12,12 @@ int main(int argc, char *argv[]){
         cerr << "Usage: ./gerp inputDirectory outputFile";
         return 1;
     }
-    string inputDir = arg[1];
-    FSTree tree[inputDir];
+    string inputDir = argv[1];
+    string outputFile = argv[2];
+    FSTree tree(inputDir);
     DirNode* root = tree.getRoot();
-    string outputFile = arg[2];
-    
+    Gerp gerp_engine;
+    gerp_engine.makeIndex(root, inputDir);
 
     return 0;
 }

@@ -36,23 +36,45 @@ public:
     // Gerp Functions
     void determineQuery(string query);
 
-private:
-    struct word{
-        string wordString
-        int lineLocation[];
-    }
-
+    // for testing
+    void makeIndex(DirNode* rootNode, string dirName);
     void insert(string key);
     void search(string query);
     string stripNonAlphaNum(string input);
     bool isAlphaChar(char c);
 
+    void makeGerpFile(string fileName, string path);
+    void open_or_die(ifstream &stream, string fileName);
 
-    string filePath;
-    string fileName;
-    vector<string> content;
-    vector<vector<word>> senseHash;
-    vector<vector<word>> insenseHash;
+private:
+    struct word{
+        string wordString;
+        int lineLocation[];
+    };
+
+    struct gerpFile{
+        string filePath;
+        string fileName;
+        vector<string> content;
+        vector<vector<word>> senseHash;
+        vector<vector<word>> insenseHash;
+    };
+
+    // void makeIndex(DirNode* rootNode, string dirName);
+    // void insert(string key);
+    // void search(string query);
+    // string stripNonAlphaNum(string input);
+    // bool isAlphaChar(char c);
+
+    // void makeGerp(string fileName, string path);
+    // void open_or_die(streamtype &stream, string fileName);
+
+
+    // string filePath;
+    // string fileName;
+    // vector<string> content;
+    // vector<vector<word>> senseHash;
+    // vector<vector<word>> insenseHash;
 };
 
 #endif
