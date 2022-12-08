@@ -44,6 +44,12 @@ void Gerp::makeIndex(DirNode* rootNode, string dirName){
     }
 }
 
+void Gerp::addToHash(gerpFile file, word element, int wordCount){
+    int key = hash<string>{}(element.wordString);
+    int index = key % wordCount;
+    file.senseHash.at(index).push_back(element); // iff no collision
+}
+
 // Input:
 // Output:
 // Purpose: 
@@ -57,11 +63,30 @@ void Gerp::makeGerpFile(string fileName, string path){
     newGerp.fileName = fileName;
     vector<string> content;
     string lineContent;
-    int testCounter = 0;
+    int wordCounter = 0;
+    int lineCounter = 0;
     while (getline(instream, lineContent)){
         //cerr << fileName << " at line [" << testCounter << "]: " << lineContent << endl;
         content.push_back(lineContent);
-        testCounter++;
+        
+        string newWordString;
+        stringstream ss(lineContent);
+        
+        // Word count of file needs to be determined before we can add words to hash ***
+        while (ss >> newWordString) {
+            wordCounter++;
+        }
+        cerr << "wordCounter: " << wordCounter << endl;
+        stringstream wordStream(lineContent);
+        while (wordStream >> newWordString) {
+            // Does not handle same word in same line edge-case
+            cerr << "newWord: " << newWordString << endl;
+            word newWord;
+            newWord.wordString = newWordString;
+            newWord.lineLocation.push_back(lineCounter);
+            addToHash(newGerp, newWord, wordCounter);
+        }
+        lineCounter++;
     }
 }
 
@@ -70,13 +95,11 @@ void Gerp::makeGerpFile(string fileName, string path){
 // Purpose: 
 void Gerp::open_or_die(ifstream &stream, string fileName){
     stream.open(fileName);
-    
     if (stream.peek() == ifstream::traits_type::eof()){
-        cerr << "Empty file detected" << endl;
+        //cerr << "Empty file detected" << endl;
         stream.close();
     }
     else if (stream.fail()) {
-        // blank (all spaces) files incorrectly trigger this
         cerr << "Cannot open file:  " << fileName << endl;
         exit(EXIT_FAILURE);
     }

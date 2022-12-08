@@ -49,7 +49,7 @@ public:
 private:
     struct word{
         string wordString;
-        int lineLocation[];
+        vector<int> lineLocation;
     };
 
     struct gerpFile{
@@ -59,6 +59,8 @@ private:
         vector<vector<word>> senseHash;
         vector<vector<word>> insenseHash;
     };
+
+    void addToHash(gerpFile file, word element, int wordCount);
 
     // void makeIndex(DirNode* rootNode, string dirName);
     // void insert(string key);
