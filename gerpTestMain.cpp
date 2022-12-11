@@ -6,6 +6,7 @@
  */
 
 #include "gerp.h"
+#include "gerpHash.h"
 
 int main(int argc, char *argv[]){
     if(argc != 3){
@@ -19,5 +20,21 @@ int main(int argc, char *argv[]){
     Gerp gerp_engine;
     gerp_engine.makeIndex(root, inputDir);
 
+    // Test for tinyData:
+    // for(int i = 0; i < gerp_engine.gerpHash.senseHash.at(9785).size(); i++){
+    //     cerr << "at(" << i << "): " << gerp_engine.gerpHash.senseHash.at(9785).at(i).wordString << endl;
+    //     for(int j = 0; j < gerp_engine.gerpHash.senseHash.at(9785).at(i).lineLocation.size(); j++){
+    //         cerr << "locations for we: " << gerp_engine.gerpHash.senseHash.at(9785).at(i).lineLocation.at(j) << endl;
+
+    //     }
+    // }
+    // cerr << "test main size: " << gerp_engine.gerpHash.senseHash->at(60).size() << endl;
+    // for(int i = 0; i < gerp_engine.gerpHash.senseHash->at(60).size(); i++){
+    //     cerr << "at(" << i << "): " << gerp_engine.gerpHash.senseHash->at(60).at(i).wordString << endl;
+    //     for(int j = 0; j < gerp_engine.gerpHash.senseHash->at(60).at(i).lineLocation.size(); j++){
+    //         cerr << "locations for we: " << gerp_engine.gerpHash.senseHash->at(60).at(i).lineLocation.at(j) << endl;
+
+    //     }
+    // }
     return 0;
 }

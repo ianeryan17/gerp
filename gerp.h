@@ -2,28 +2,17 @@
  * Ryo Shimada and Ian Ryan
  * 12/7/22
  * 
- * This file acts as the linker file for gerp.cpp.
+ * This file acts as the linker file for gerp.cpp and contains the declarations
+ * of the gerp class.
  * 
  */
 
 #ifndef _GERP_H_
 #define _GERP_H_
 
+#include "gerpHash.h"
 #include "DirNode.h"
 #include "FSTree.h"
-#include <vector>
-#include <list>
-#include <queue>
-#include <fstream>
-#include <algorithm>
-#include <cstdio>
-#include <cstring>
-#include <iomanip>
-#include <cassert>
-
-#include <iostream>
-#include <string>
-#include <functional>
 
 using namespace std;
 
@@ -34,49 +23,25 @@ public:
     Gerp();
 
     // Gerp Functions
-    void determineQuery(string query);
+    void determineQuery(string &query);
 
     // for testing
-    void makeIndex(DirNode* rootNode, string dirName);
-    void insert(string key);
-    void search(string query);
-    string stripNonAlphaNum(string input);
-    bool isAlphaChar(char c);
-
-    void makeGerpFile(string fileName, string path);
-    void open_or_die(ifstream &stream, string fileName);
-
-private:
-    struct word{
-        string wordString;
-        vector<int> lineLocation;
-    };
+    vector<string> getContent();
+    void makeIndex(DirNode* rootNode, string &dirName);
+    void makeGerpFile(string &path);
+    void open_or_die(ifstream &stream, string &fileName);
 
     struct gerpFile{
         string filePath;
-        string fileName;
-        vector<string> content;
-        vector<vector<word>> senseHash;
-        vector<vector<word>> insenseHash;
+        int startIndex;
     };
 
-    void addToHash(gerpFile file, word element, int wordCount);
+    GerpHash gerpHash;
+    vector<string> content; // contains all the lines of every file
+    int tracker;
 
-    // void makeIndex(DirNode* rootNode, string dirName);
-    // void insert(string key);
-    // void search(string query);
-    // string stripNonAlphaNum(string input);
-    // bool isAlphaChar(char c);
-
-    // void makeGerp(string fileName, string path);
-    // void open_or_die(streamtype &stream, string fileName);
-
-
-    // string filePath;
-    // string fileName;
-    // vector<string> content;
-    // vector<vector<word>> senseHash;
-    // vector<vector<word>> insenseHash;
+private:
+    vector<gerpFile> files;
 };
 
 #endif

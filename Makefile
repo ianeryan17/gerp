@@ -10,15 +10,19 @@ MAKEFLAGS += -L
 
 
 ##  This rule builds the gerpTest executable
-gerpTest: gerp.o gerpTestMain.o DirNode.o FSTree.o
-	$(CXX) $(CXXFLAGS) -o gerpTest gerpTestMain.o gerp.o DirNode.o FSTree.o
+gerpTest: gerp.o gerpTestMain.o DirNode.o FSTree.o gerpHash.o
+	$(CXX) $(CXXFLAGS) -o gerpTest gerpTestMain.o gerpHash.o gerp.o DirNode.o FSTree.o
+
+##  This rule builds the gerpHash.o
+gerpHash.o: gerpHash.cpp gerp.h gerpHash.h
+	$(CXX) $(CXXFLAGS) -c gerpHash.cpp
 
 ##	This rule builds gerp.o
-gerp.o: gerp.cpp gerp.h DirNode.o FSTree.o
+gerp.o: gerp.cpp gerp.h gerpHash.h DirNode.o FSTree.o
 	$(CXX) $(CXXFLAGS) -c gerp.cpp
 
 ##	This rule builds gerpTestMain.o
-gerpTestMain.o: gerpTestMain.cpp gerp.h DirNode.o FSTree.o
+gerpTestMain.o: gerpTestMain.cpp gerp.h gerpHash.h DirNode.o FSTree.o
 	$(CXX) $(CXXFLAGS) -c gerpTestMain.cpp
 
 ##  This rule builds the treeTraversal executable
