@@ -22,23 +22,33 @@ public:
     // Constructor
     Gerp();
 
+    struct gerpFile{
+        string filePath;
+        int startIndex;
+    };
+
     // Gerp Functions
-    void determineQuery(string &query);
+    void determineQuery();
+
+    void searchString(string query);
+    void searchIString(string query);
 
     // for testing
     vector<string> getContent();
     void makeIndex(DirNode* rootNode, string &dirName);
     void makeGerpFile(string &path);
     void open_or_die(ifstream &stream, string &fileName);
+    void breakUpQuery(string s);
 
-    struct gerpFile{
-        string filePath;
-        int startIndex;
-    };
+
+    gerpFile* getFile(int lineNum);
 
     GerpHash gerpHash;
     vector<string> content; // contains all the lines of every file
     int tracker;
+    string query;
+    string command;
+    string output;
 
 private:
     vector<gerpFile> files;

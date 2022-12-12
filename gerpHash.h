@@ -23,6 +23,7 @@
 #include <iostream>
 #include <string>
 #include <functional>
+#include <sstream>
 
 using namespace std;
 
@@ -40,11 +41,14 @@ public:
         vector<int> lineLocation;
     };
 
-    void addWord(string &lineContent, int &lineCounter, int &tracker);
+    void addWordtoSense(string &lineContent, int &lineCounter, int &tracker);
+    void addWordtoInsense(string &lineContent, int &lineCounter, int &tracker);
     void addToHash(word &element, int &size, vector<vector<word>> *vecHash);
     string stripNonAlphaNum(string &input);
     bool isAlphaChar(char &c);
     void expandSenseHash();
+    void expandInsenseHash();
+    string makeLowercase(string s);
     bool mustExpand(int &words, int &bucketCount);
 
     vector<vector<word>> *senseHash;

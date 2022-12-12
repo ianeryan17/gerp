@@ -19,6 +19,7 @@ int main(int argc, char *argv[]){
     DirNode* root = tree.getRoot();
     Gerp gerp_engine;
     gerp_engine.makeIndex(root, inputDir);
+    gerp_engine.determineQuery();
 
     // Test for tinyData:
     // for(int i = 0; i < gerp_engine.gerpHash.senseHash.at(9785).size(); i++){
@@ -28,6 +29,8 @@ int main(int argc, char *argv[]){
 
     //     }
     // }
+
+    // size = 10
     // cerr << "test main size: " << gerp_engine.gerpHash.senseHash->at(60).size() << endl;
     // for(int i = 0; i < gerp_engine.gerpHash.senseHash->at(60).size(); i++){
     //     cerr << "at(" << i << "): " << gerp_engine.gerpHash.senseHash->at(60).at(i).wordString << endl;
