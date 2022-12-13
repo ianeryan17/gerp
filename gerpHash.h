@@ -43,7 +43,7 @@ public:
 
     void addWordtoSense(string &lineContent, int &lineCounter, int &tracker);
     void addWordtoInsense(string &lineContent, int &lineCounter, int &tracker);
-    void addToHash(word &element, int &size, vector<vector<word>> *vecHash);
+    void addToHash(word &element, int &size, vector<vector<word>> *vash);
     string stripNonAlphaNum(string &input);
     bool isAlphaChar(char &c);
     void expandSenseHash();

@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
     DirNode* root = tree.getRoot();
     Gerp gerp_engine;
     gerp_engine.makeIndex(root, inputDir);
-    gerp_engine.determineQuery();
+    gerp_engine.determineQuery(outputFile);
 
     // Test for tinyData:
     // for(int i = 0; i < gerp_engine.gerpHash.senseHash.at(9785).size(); i++){

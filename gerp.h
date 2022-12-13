@@ -28,18 +28,16 @@ public:
     };
 
     // Gerp Functions
-    void determineQuery();
+    void determineQuery(string output);
 
-    void searchString(string query);
-    void searchIString(string query);
+    void searchString(ofstream &outstream, string query);
+    void searchIString(ofstream &outstream, string query);
 
-    // for testing
-    vector<string> getContent();
     void makeIndex(DirNode* rootNode, string &dirName);
     void makeGerpFile(string &path);
-    void open_or_die(ifstream &stream, string &fileName);
+    void open_or_die(ifstream &stream, string fileName); 
+    void open_or_die2(ofstream &stream, string fileName);   
     void breakUpQuery(string s);
-
 
     gerpFile* getFile(int lineNum);
 
@@ -48,10 +46,10 @@ public:
     int tracker;
     string query;
     string command;
-    string output;
 
 private:
     vector<gerpFile> files;
+    string outputFile;
 };
 
 #endif

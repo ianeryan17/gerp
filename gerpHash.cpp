@@ -201,7 +201,7 @@ bool GerpHash::mustExpand(int &words, int &bucketCount){
 // Purpose: this function takes in the word, size, and pointer to the hash 
 // table, and adds the given word to the hash table at the index that the
 // hash function produces by using the string of the word as the key.
-void GerpHash::addToHash(word &elmt, int &size, vector<vector<word>> *vHash){
+void GerpHash::addToHash(word &elmt, int &size, vector<vector<word>> *vash){
     int key = hash<string>{}(elmt.wordString);
     //cerr << "total size: " << size << endl;
     //cerr << "key: " << key << endl;
@@ -209,22 +209,18 @@ void GerpHash::addToHash(word &elmt, int &size, vector<vector<word>> *vHash){
     //cerr << "index: " << index << endl;
     //cerr << "size: " << vecHash->at(index).size() << endl;
     //cerr << "vecHash addy3: " << vecHash << endl;
-    if(vHash->at(index).size() == 0){
-        vHash->at(index).push_back(elmt);
+    if(vash->at(index).size() == 0){
+        vash->at(index).push_back(elmt);
     } else {
-        for(int i = 0; i < vHash->at(index).size(); i++){
+        for(int i = 0; i < vash->at(index).size(); i++){
             int lineNum = elmt.lineLocation.back();
-            word currWord = vHash->at(index).at(i);
             // DEBUG
-            // if(element.wordString == "we"){
-            //     cerr << "line Number: " << lineNum << endl;
-            // }
-            if(currWord.wordString == elmt.wordString){
-                if(not (currWord.lineLocation.back() == lineNum)){
-                    currWord.lineLocation.push_back(lineNum);
+            if(vash->at(index).at(i).wordString == elmt.wordString){
+                if(not (vash->at(index).at(i).lineLocation.back() == lineNum)){
+                    vash->at(index).at(i).lineLocation.push_back(lineNum);
                 }
             } else {
-                vHash->at(index).push_back(elmt);
+                vash->at(index).push_back(elmt);
             }
         }
     }
