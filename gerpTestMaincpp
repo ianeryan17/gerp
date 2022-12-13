@@ -6,19 +6,15 @@
  */
 
 #include "gerp.h"
-#include "gerpHash.h"
 
 int main(int argc, char *argv[]){
     if(argc != 3){
         cerr << "Usage: ./gerp inputDirectory outputFile";
         return 1;
     }
-    string inputDir = argv[1];
-    string outputFile = argv[2];
-    FSTree tree(inputDir);
-    DirNode* root = tree.getRoot();
-    Gerp gerp_engine;
-    gerp_engine.makeIndex(root, inputDir);
-    gerp_engine.determineQuery(outputFile);
+    string inputDir = arg[1];
+    string outputFile = arg[2];
+    
+
     return 0;
 }

@@ -30,26 +30,25 @@ public:
     // Gerp Functions
     void determineQuery(string output);
 
-    void searchString(ofstream &outstream, string query);
-    void searchIString(ofstream &outstream, string query);
+    void searchString(string query);
+    void searchIString(string query);
 
     void makeIndex(DirNode* rootNode, string &dirName);
     void makeGerpFile(string &path);
     void open_or_die(ifstream &stream, string fileName); 
     void open_or_die2(ofstream &stream, string fileName);   
-    void breakUpQuery(string s);
 
     gerpFile* getFile(int lineNum);
 
     GerpHash gerpHash;
-    vector<string> content; // contains all the lines of every file
+    vector<string> content;
     int tracker;
     string query;
     string command;
+    ofstream outstream;
 
 private:
     vector<gerpFile> files;
-    string outputFile;
 };
 
 #endif

@@ -41,7 +41,7 @@ void Gerp::makeIndex(DirNode* rootNode, string &dirName){
         } if (currNode->hasFiles()){
             int num2 = currNode->numFiles();
             for (int j = 0; j < num2; j++){
-                cout << dirName << "/" << currNode->getFile(j)<< endl;
+                //cout << dirName << "/" << currNode->getFile(j)<< endl;
                 string pathString = dirName + "/" + currNode->getFile(j);
                 makeGerpFile(pathString);
             }
@@ -58,13 +58,10 @@ void Gerp::makeIndex(DirNode* rootNode, string &dirName){
 // and sense hashes.
 void Gerp::makeGerpFile(string &path){
     ifstream instream;
-    //cerr << "file name: " << fileName << endl;
-    //cerr << "path: " << path << endl;
     open_or_die(instream, path);
     gerpFile newGerp;
     newGerp.filePath = path;
     newGerp.startIndex = tracker;
-    //cerr << "making the startIndex of " << newGerp.filePath << " " << newGerp.startIndex << endl;
     files.push_back(newGerp);
     string lineContent;
     int lineCounter = 0;
@@ -111,37 +108,24 @@ void Gerp::open_or_die2(ofstream &stream, string fileName){
 // Purpose: this function is responsible for running the command loop that
 // takes in the query, returns only once the quit command is given.
 void Gerp::determineQuery(string output){
-    outputFile = output;
-    ofstream outstream;
-    open_or_die2(outstream, outputFile);
-    string s;
+    open_or_die2(outstream, output);
     bool quitTriggered = false;
     while (not quitTriggered){
         cout << "Query? ";
-        getline(cin, s);
-        if (s[0] == '@'){
-            if (s[1] == 'q'){
-                quitTriggered = true;
-            } else {
-                breakUpQuery(s);
-            }
-        } else {
-            command = s;
-        }
+        cin >> command;
         if(not (command[0] == '@')){
-            //cerr << "SENSITVELY SEARCHING" << endl;
-            //cerr << "COMMAND: " << command << endl;
-            searchString(outstream, command);
+            searchString(command);
         } 
         else if(command == "@i" or command == "@insensitive"){
-            //cerr << "INSENSITIVELY SEARCHING" << endl;
-            searchIString(outstream, query);
+            cin >> query;
+            searchIString(query);
         }
         else if (command == "@f"){
+            cin >> query;
             outstream.close();
-            outputFile = query;
-            // New file called outputFile is not being made. IDK Why.
-            outstream.open(outputFile);
+            open_or_die2(outstream, query);
+        } else if (command[1] = 'q'){
+            quitTriggered = true;
         }
         command = "";
         query = "";
@@ -151,30 +135,11 @@ void Gerp::determineQuery(string output){
     return;
 }
 
-// Input: string s
-// Output: nothing
-// Purpose: this function takes in a given string and separates the string
-// into two separate strings for one before the space and after the space.
-void Gerp::breakUpQuery(string s){
-    cerr << "s: " << s << endl;
-    int counter = 0;
-    while(not (s[counter] == ' ')){
-        command += s[counter];
-        counter++;
-    }
-    for(int i = counter; i < s.size(); i++){
-        query += s[i];
-    }
-    query[0] = '\0';
-    cerr << "command: " << command << endl;
-    cerr << "query: " << query << endl;
-}
-
 // Input: string query
 // Output: nothing
 // Purpose: this function takes in a given string and searches within the 
 // senseHash for lines that match this query exactly, logging the results. 
-void Gerp::searchString(ofstream &outstream, string query){
+void Gerp::searchString(string query){
     query = gerpHash.stripNonAlphaNum(query);
     int key = hash<string>{}(query);
     int size = gerpHash.senseSize;
@@ -185,16 +150,11 @@ void Gerp::searchString(ofstream &outstream, string query){
             for(int j = 0; j < currWord.lineLocation.size(); j++){
                 int lineNum = currWord.lineLocation.at(j);
                 gerpFile *file = getFile(lineNum);
-                //cerr << "LINEnum: " << lineNum << endl;
-                //cerr << "startIndex: " << file->startIndex << endl;
                 string s = "";
                 string numbers = to_string(lineNum - file->startIndex + 1);
-                // cout << file->filePath << ":";
-                // cout << (lineNum - file->startIndex + 1) << ":";
-                // cout << content.at(lineNum) << endl;
                 s += file->filePath + ":" + numbers;
                 s += ": " + content.at(lineNum) + '\n';
-                cout << s;
+                //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
             }
@@ -207,10 +167,9 @@ void Gerp::searchString(ofstream &outstream, string query){
 // Purpose: this function takes in a given string and searches within the 
 // insenseHash for lines that match this query, while not caring about case,
 // and logs the results.
-void Gerp::searchIString(ofstream &outstream, string query){
+void Gerp::searchIString(string query){
     query = gerpHash.stripNonAlphaNum(query);
     query = gerpHash.makeLowercase(query);
-    cerr << "q: " << query << endl;
     int key = hash<string>{}(query);
     int size = gerpHash.insenseSize;
     int index = abs(key % size);
@@ -229,7 +188,7 @@ void Gerp::searchIString(ofstream &outstream, string query){
                 string numbers = to_string(lineNum - file->startIndex + 1);
                 s += file->filePath + ":" + numbers;
                 s += ": " + content.at(lineNum) + '\n';
-                cout << s;
+                //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
             }

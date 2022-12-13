@@ -7,7 +7,6 @@
 
 #include "gerp.h"
 #include "gerpHash.h"
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -121,7 +120,7 @@ void GerpHash::addWordtoSense(string &lineContent, int &line, int &tracker){
     stringstream wordStream(lineContent);
     while (wordStream >> newWordString) {
         if(mustExpand(wordCount, senseSize)){
-            cerr << "EXPANDING Sense hash" << endl;
+            //cerr << "EXPANDING Sense hash" << endl;
             expandSenseHash();
         }
         word newWord;
@@ -151,7 +150,7 @@ void GerpHash::addWordtoInsense(string &lineContent, int &lineCounter, int &trac
     stringstream wordStream(lineContent);
     while (wordStream >> newWordString) {
         if(mustExpand(wordCount, insenseSize)){
-            cerr << "EXPANDING insense hash" << endl;
+            //cerr << "EXPANDING insense hash" << endl;
             expandInsenseHash();
         }
         word newWord;
