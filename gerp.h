@@ -14,8 +14,6 @@
 #include "DirNode.h"
 #include "FSTree.h"
 
-using namespace std;
-
 class Gerp
 {
 public:
@@ -28,27 +26,25 @@ public:
     };
 
     // Gerp Functions
-    void determineQuery(string output);
+    void runGerp(DirNode* rootNode, string &dir, string &output);
+    void determineQuery(string &output);
 
-    void searchString(string query);
-    void searchIString(string query);
+private:
+    void searchString(string &input);
+    void searchIString(string &input);
 
     void makeIndex(DirNode* rootNode, string &dirName);
     void makeGerpFile(string &path);
-    void open_or_die(ifstream &stream, string fileName); 
-    void open_or_die2(ofstream &stream, string fileName);   
-
-    gerpFile* getFile(int lineNum);
-
+    void open_or_die(ifstream &stream, string &fileName); 
+    void open_or_die2(ofstream &stream, string &fileName);   
+    gerpFile* getFile(int &lineNum);
+    vector<gerpFile> files;
     GerpHash gerpHash;
     vector<string> content;
     int tracker;
     string query;
     string command;
     ofstream outstream;
-
-private:
-    vector<gerpFile> files;
 };
 
 #endif

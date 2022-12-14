@@ -10,8 +10,8 @@ MAKEFLAGS += -L
 
 
 ##  This rule builds the gerpTest executable
-gerpTest: gerp.o gerpTestMain.o DirNode.o FSTree.o gerpHash.o
-	$(CXX) $(CXXFLAGS) -o gerpTest gerpTestMain.o gerpHash.o gerp.o DirNode.o FSTree.o
+gerp: gerp.o gerpTestMain.o DirNode.o FSTree.o gerpHash.o
+	$(CXX) $(CXXFLAGS) -o gerp gerpTestMain.o gerpHash.o gerp.o DirNode.o FSTree.o
 
 ##  This rule builds the gerpHash.o
 gerpHash.o: gerpHash.cpp gerp.h gerpHash.h
@@ -50,9 +50,9 @@ main2.o: main2.cpp stringProcessing.h
 	$(CXX) $(CXXFLAGS) -c main2.cpp
 
 provide:
-	provide comp15 proj4_gerp_phase1 FSTreeTraversal.cpp \
-		stringProcessing.h stringProcessing.cpp \
-		README
+	provide comp15 proj4_gerp Makefile gerp.cpp gerpHash.cpp \
+		gerp.h gerpHash.h gerpTestMain.cpp \
+		README FSTree.h DirNode.h \
 
 ##
 ## Here is a rule for compiling .cyl files for use in your testing

@@ -18,7 +18,6 @@ int main(int argc, char *argv[]){
     FSTree tree(inputDir);
     DirNode* root = tree.getRoot();
     Gerp gerp_engine;
-    gerp_engine.makeIndex(root, inputDir);
-    gerp_engine.determineQuery(outputFile);
+    gerp_engine.runGerp(root, inputDir, outputFile);
     return 0;
 }

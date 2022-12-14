@@ -48,7 +48,7 @@ public:
     bool isAlphaChar(char &c);
     void expandSenseHash();
     void expandInsenseHash();
-    string makeLowercase(string s);
+    string makeLowercase(string &s);
     bool mustExpand(int &words, int &bucketCount);
 
     vector<vector<word>> *senseHash;

@@ -8,13 +8,22 @@
 #include "gerp.h"
 #include "gerpHash.h"
 
-using namespace std;
-
 Gerp::Gerp(){
+    // Maybe make content 100000?
     content.resize(0);
     tracker = 0;
     command = "";
     query = "";
+}
+
+// Input: DirNode* root, string dir, string output
+// Output: nothing
+// Purpose: this function calls the makeIndex and determineQuery funtions,
+// which are necessary to run the gerp program. By calling this one function
+// with the necessary arguments, the gerp program will run.
+void Gerp::runGerp(DirNode* root, string &dir, string &output){
+    makeIndex(root, dir);
+    determineQuery(output);
 }
 
 // Input: DirNode* rootNode, string dirName
@@ -80,7 +89,7 @@ void Gerp::makeGerpFile(string &path){
 // Input: ifstream &stream and string fileName
 // Output: nothing
 // Purpose: this function opens a file if possible, and otherwise exits.
-void Gerp::open_or_die(ifstream &stream, string fileName){
+void Gerp::open_or_die(ifstream &stream, string &fileName){
     stream.open(fileName);
     if (stream.peek() == ifstream::traits_type::eof()){
         //cerr << "Empty file detected" << endl;
@@ -95,7 +104,7 @@ void Gerp::open_or_die(ifstream &stream, string fileName){
 // Input: ofstream &stream and string fileName
 // Output: nothing
 // Purpose: this function opens a file if possible, and otherwise exits.
-void Gerp::open_or_die2(ofstream &stream, string fileName){
+void Gerp::open_or_die2(ofstream &stream, string &fileName){
     stream.open(fileName);
     if (stream.fail()) {
         cerr << "Cannot open file: " << fileName << endl;
@@ -107,7 +116,7 @@ void Gerp::open_or_die2(ofstream &stream, string fileName){
 // Output: nothing
 // Purpose: this function is responsible for running the command loop that
 // takes in the query, returns only once the quit command is given.
-void Gerp::determineQuery(string output){
+void Gerp::determineQuery(string &output){
     open_or_die2(outstream, output);
     bool quitTriggered = false;
     while (not quitTriggered){
@@ -124,7 +133,7 @@ void Gerp::determineQuery(string output){
             cin >> query;
             outstream.close();
             open_or_die2(outstream, query);
-        } else if (command[1] = 'q'){
+        } else if (command[1] == 'q'){
             quitTriggered = true;
         }
         command = "";
@@ -139,32 +148,33 @@ void Gerp::determineQuery(string output){
 // Output: nothing
 // Purpose: this function takes in a given string and searches within the 
 // senseHash for lines that match this query exactly, logging the results. 
-void Gerp::searchString(string query){
-    query = gerpHash.stripNonAlphaNum(query);
+void Gerp::searchString(string &input){
+    query = gerpHash.stripNonAlphaNum(input);
     int key = hash<string>{}(query);
     int size = gerpHash.senseSize;
     int index = abs(key % size);
     bool wordFound = false;
-    for(int i = 0; i < gerpHash.senseHash->at(index).size(); i++){
+    string s = "";
+    for(int i = 0; i < (int) gerpHash.senseHash->at(index).size(); i++){
         GerpHash::word currWord = gerpHash.senseHash->at(index).at(i);
         if(currWord.wordString == query){
-            for(int j = 0; j < currWord.lineLocation.size(); j++){
+            wordFound = true;
+            for(int j = 0; j < (int) currWord.lineLocation.size(); j++){
                 int lineNum = currWord.lineLocation.at(j);
                 gerpFile *file = getFile(lineNum);
-                string s = "";
+                s = "";
                 string numbers = to_string(lineNum - file->startIndex + 1);
                 s += file->filePath + ":" + numbers;
                 s += ": " + content.at(lineNum) + '\n';
                 //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
-                wordFound = true;
             }
         }
     }
-    if (wordFound == false){
-        outstream << query << " Not Found." 
-        << " Try with @insensitive or @i." << endl;
+    if(not wordFound){
+        s = query + " Not Found. Try with @insensitive or @i." + '\n';
+        outstream << s;
     }
 }
 
@@ -173,17 +183,19 @@ void Gerp::searchString(string query){
 // Purpose: this function takes in a given string and searches within the 
 // insenseHash for lines that match this query, while not caring about case,
 // and logs the results.
-void Gerp::searchIString(string query){
-    query = gerpHash.stripNonAlphaNum(query);
+void Gerp::searchIString(string &input){
+    query = gerpHash.stripNonAlphaNum(input);
     query = gerpHash.makeLowercase(query);
     int key = hash<string>{}(query);
     int size = gerpHash.insenseSize;
     int index = abs(key % size);
     bool wordFound = false;
-    for(int i = 0; i < gerpHash.insenseHash->at(index).size(); i++){
+    string s = "";
+    for(int i = 0; i < (int) gerpHash.insenseHash->at(index).size(); i++){
         GerpHash::word currWord = gerpHash.insenseHash->at(index).at(i);
         if(currWord.wordString == query){
-            for(int j = 0; j < currWord.lineLocation.size(); j++){
+            wordFound = true;
+            for(int j = 0; j < (int) currWord.lineLocation.size(); j++){
                 int lineNum = currWord.lineLocation.at(j);
                 gerpFile *file = getFile(lineNum);
                 //cerr << "LINEnum: " << lineNum << endl;
@@ -191,19 +203,19 @@ void Gerp::searchIString(string query){
                 // cout << file->filePath << ":"; 
                 // cout << (lineNum - file->startIndex + 1) << ": ";
                 // cout << content.at(lineNum) << endl;
-                string s = "";
+                s = "";
                 string numbers = to_string(lineNum - file->startIndex + 1);
                 s += file->filePath + ":" + numbers;
                 s += ": " + content.at(lineNum) + '\n';
                 //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
-                wordFound = true;
             }
         }
     }
-    if (wordFound == false){
-        outstream << query << " Not Found." << endl;
+    if(not wordFound){
+        s = query + " Not Found." + '\n';
+        outstream << s;
     }
 }
 
@@ -212,8 +224,8 @@ void Gerp::searchIString(string query){
 // Purpose: this function takes in a given integer line number in the vector
 // called content that holds all the lines from every file, and returns the
 // pointer to the gerpFile that that this line number is from.
-Gerp::gerpFile* Gerp::getFile(int lineNum){
-    for(int i = 0; i < files.size(); i++){
+Gerp::gerpFile* Gerp::getFile(int &lineNum){
+    for(int i = 0; i < (int) files.size(); i++){
         //cerr << "lineNumber !! " << lineNum << endl;
         //cerr << "stIND: " << files.at(i).startIndex << endl;
         if(lineNum < files.at(i).startIndex){
