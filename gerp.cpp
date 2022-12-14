@@ -144,6 +144,7 @@ void Gerp::searchString(string query){
     int key = hash<string>{}(query);
     int size = gerpHash.senseSize;
     int index = abs(key % size);
+    bool wordFound = false;
     for(int i = 0; i < gerpHash.senseHash->at(index).size(); i++){
         GerpHash::word currWord = gerpHash.senseHash->at(index).at(i);
         if(currWord.wordString == query){
@@ -157,8 +158,13 @@ void Gerp::searchString(string query){
                 //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
+                wordFound = true;
             }
         }
+    }
+    if (wordFound == false){
+        outstream << query << " Not Found." 
+        << " Try with @insensitive or @i." << endl;
     }
 }
 
@@ -173,6 +179,7 @@ void Gerp::searchIString(string query){
     int key = hash<string>{}(query);
     int size = gerpHash.insenseSize;
     int index = abs(key % size);
+    bool wordFound = false;
     for(int i = 0; i < gerpHash.insenseHash->at(index).size(); i++){
         GerpHash::word currWord = gerpHash.insenseHash->at(index).at(i);
         if(currWord.wordString == query){
@@ -191,8 +198,12 @@ void Gerp::searchIString(string query){
                 //cout << s;
                 outstream << s;
                 //cerr << "content size: " << content.size() << endl;
+                wordFound = true;
             }
         }
+    }
+    if (wordFound == false){
+        outstream << query << " Not Found." << endl;
     }
 }
 
